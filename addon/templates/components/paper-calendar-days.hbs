@@ -1,0 +1,40 @@
+<table class="md-calendar-day-header">
+  <thead>
+    <tr>
+      {{#each weekdaysNames as |wdn|}}
+        <th>{{-paper-first-char wdn}}</th>
+      {{/each}}
+    </tr>
+  </thead>
+</table>
+
+<div class="md-calendar-scroll-mask">
+  <table class="md-calendar">
+    <tbody md-calendar-month-body class="md-calendar-month">
+      <tr>
+        <td class="md-calendar-month-label md-calendar-label-clickable" colspan="7">
+          <span>Oct 2018</span>
+          {{paper-icon "keyboard-arrow-left"}}
+        </td>
+      </tr>
+      {{#each weeks key="id" as |week|}}
+        <tr>
+          {{#each week.days key="id" as |day|}}
+            <td class="md-calendar-date {{if day.isSelected "md-calendar-selected-date"}} {{if day.isToday "md-calendar-date-today"}}"
+              onclick={{action calendar.actions.select day calendar}}
+              onfocus={{action "onFocusDay" day}}
+              onblur={{action "onBlurDay"}}>
+              <span class="md-calendar-date-selection-indicator">
+                {{#if hasBlock}}
+                  {{yield day publicAPI}}
+                {{else}}
+                  {{day.number}}
+                {{/if}}
+              </span>
+            </td>
+          {{/each}}
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>
